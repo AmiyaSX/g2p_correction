@@ -43,7 +43,7 @@
                             <div class="card mb-3">
                                 <div class="card-header" onclick="toggleVariations('{{ word }}')">
                                     <button type="button" class="btn btn-link" onclick="toggleVariations('{{ word }}')"  data-word="{{ word }}">
-                                        <img src="../static/icons/arrow-bar-down.svg" alt="Toggle Variations">
+                                        <img onclick="toggleVariations('{{ word }}')" src="../static/icons/arrow-bar-down.svg" alt="Toggle Variations">
                                     </button>
                                     {{ word }}
                                 </div>
