@@ -42,8 +42,8 @@
                             {% for word, phoneme_audios in word2phoneme_audio.items() %}
                             <div class="card mb-3">
                                 <div class="card-header" onclick="toggleVariations('{{ word }}')">
-                                    <button type="button" class="btn btn-link" onclick="toggleVariations('{{ word }}')"  data-word="{{ word }}">
-                                        <img src="../static/icons/arrow-bar-down.svg" alt="Toggle Variations">
+                                    <button type="button" class="btn btn-link" onkeypress="toggleVariations('{{ word }}')" onclick="toggleVariations('{{ word }}')"  data-word="{{ word }}">
+                                        <img onkeypress="toggleVariations('{{ word }}')" onclick="toggleVariations('{{ word }}')" src="../static/icons/arrow-bar-down.svg" alt="Toggle Variations">
                                     </button>
                                     {{ word }}
                                 </div>
