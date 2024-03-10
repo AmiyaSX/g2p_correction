@@ -5,6 +5,11 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div class="spinner"></div>
+</div>
+
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center min-vh-100">
         <div class="col-md-8">
@@ -16,9 +21,16 @@
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         var audioPlayer = document.getElementById('audioPlayer');
+                        document.getElementById('loadingOverlay').style.display = 'flex';
                         if (audioPlayer) {
-                            audioPlayer.play()
-                            .catch(error => console.error("Audio play failed:", error));
+                            audioPlayer.play().then(function() {
+                                document.getElementById('loadingOverlay').style.display = 'none';
+                            })
+                            .catch(function(error) {
+                                console.error("Audio play failed:", error);
+                                // Hide loading overlay on error
+                                document.getElementById('loadingOverlay').style.display = 'none';
+                            });
                         }
                         if (audioPlayer) {
                             audioPlayer.onended = function() {
@@ -43,9 +55,6 @@
                 {% if word2phoneme_audio %}
                     <form action="{{ url_for('interface.text_to_audio')}}" method="POST">
                         <div class="mt-4">
-                            <div id="loadingOverlay" class="loading-overlay">
-                                <div class="spinner"></div>
-                            </div>
                             <h5>Choose the phoneme considered to be wrong:</h5>
                             {% for word, phoneme_audios in word2phoneme_audio.items() %}
                             <div class="card mb-3" >
