@@ -20,6 +20,11 @@
                             audioPlayer.play()
                             .catch(error => console.error("Audio play failed:", error));
                         }
+                        if (audioPlayer) {
+                            audioPlayer.onended = function() {
+                                document.getElementById('listenAgainBtn').style.display = 'inline-block';
+                            };
+                        }
                     });
                 </script>
             {% endif %}
@@ -43,7 +48,7 @@
                             </div>
                             <h5>Choose the phoneme considered to be wrong:</h5>
                             {% for word, phoneme_audios in word2phoneme_audio.items() %}
-                            <div class="card mb-3">
+                            <div class="card mb-3" >
                                 <div class="card-header" onclick="toggleVariations('{{ word }}')">
                                     <button type="button" class="btn btn-link" onkeypress="toggleVariations('{{ word }}')" onclick="toggleVariations('{{ word }}')"  data-word="{{ word }}">
                                         <img onkeypress="toggleVariations('{{ word }}')" onclick="toggleVariations('{{ word }}')" src="../static/icons/arrow-bar-down.svg" alt="Toggle Variations">
@@ -61,9 +66,10 @@
                                         </div>
                                         {% endfor %}
                                         <div class="form-check">
-                                            <input type="radio" class="form-check-input" name="selected_word_{{ word }}" value="{{ word }}" id="{{ word }}_{{ loop.index }}"
-                                            {% if selected_word == word %}checked{% endif %}>
-                                            <input name="selected_phoneme_{{ word }}" value="{{ phoneme }}" placeholder="Provide your own">
+                                            <input type="radio" class="form-check-input" name="selected_word_{{ word }}" value="{{ word }}" id="{{ loop.index }}">
+                                            <label class="form-check-label" for="{{ loop.index }}">
+                                                <input onclick="selectRadio('{{loop.index}}')" name="selected_phoneme_{{ word }}" value="{{ phoneme }}" placeholder="Provide your own">
+                                            </label>
                                         </div>
                                         
                                     </div>
@@ -124,15 +130,10 @@
             .catch(error => console.error("Audio play failed:", error));
         }
     }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        var audioPlayer = document.getElementById('audioPlayer');
-        if (audioPlayer) {
-            audioPlayer.onended = function() {
-                document.getElementById('listenAgainBtn').style.display = 'inline-block';
-            };
-        }
-    });
+
+    function selectRadio(index) {
+        document.getElementById(index).checked = true;
+    }
 </script>
 
 {% endblock %}
