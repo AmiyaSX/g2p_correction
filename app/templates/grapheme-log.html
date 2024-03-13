@@ -2,22 +2,81 @@
 
 {% block title %}{{ grapheme }} Log{% endblock %}
 
+{% block styles %}
+<!-- Custom CSS for styling -->
+<style>
+    /* Custom typography */
+    h2 {
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        color: #333;
+    }
+
+    p {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        color: #666;
+    }
+
+    /* Custom card styles */
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Custom table styles */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    th {
+        background-color: #f7f7f7;
+        font-weight: bold;
+    }
+
+    /* Custom animation */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .fadeIn {
+        animation: fadeIn 1s ease-out;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container py-4">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="text-black mb-4">{{ grapheme }} Log</h2>
-            <div class="card bg-dark text-white mb-4">
+            <h2 class="text-black mb-4">🎨 {{ grapheme }} Log 📝</h2>
+            <div class="card bg-light text-dark mb-4 fadeIn">
                 <div class="card-body">
-                    <h5 class="card-title">Current phoneme:</h5>
+                    <h5 class="card-title">🔊 Current Phoneme:</h5>
                     <p class="card-text">{{ phoneme }}</p>
                 </div>
             </div>
-            <div class="card bg-dark text-white">
+            <div class="card bg-light text-dark fadeIn">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-dark table-striped">
-                            <thead>
+                        <table class="table table-striped">
+                            <thead class="thead-light">
                                 <tr>
                                     <th scope="col">Date</th>
                                     <th scope="col">From Transcription</th>
@@ -27,16 +86,16 @@
                             <tbody>
                                 {% for log in grapheme_logs %}
                                 <tr>
-                                    <td>{{ "Y-m-d H:i" }}</td>
-                                    <td>{{ "from_phoneme"}}</td>
-                                    <td>{{ "log.to_phoneme" }}</td>
+                                    <td>log.date</td>
+                                    <td>log.from_phoneme</td>
+                                    <td>log.to_phoneme</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     {% if not grapheme_logs %}
-                    <div class="alert alert-info mt-4" role="alert">
+                    <div class="alert alert-info mt-4 fadeIn" role="alert">
                         No logs available.
                     </div>
                     {% endif %}
@@ -46,3 +105,4 @@
     </div>
 </div>
 {% endblock %}
+
